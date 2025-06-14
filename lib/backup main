@@ -1,0 +1,175 @@
+  import 'package:flutter/material.dart';
+
+  void main() {
+    runApp(MyApp());
+  }
+
+  class Product {
+    final String name;
+    final String image;
+    final int price;
+
+    Product({required this.name, required this.image, required this.price});
+  }
+
+  class MyApp extends StatefulWidget {
+    @override
+    State<MyApp> createState() => _MyAppState();
+  }
+
+  class _MyAppState extends State<MyApp> {
+    int _selectedIndex = 0;
+    List<Product> cart = [];
+
+    final List<Product> products = [
+      Product(name: 'Bomboloni Coklat', image: 'assets/images/coklat.jpg', price: 10000),
+      Product(name: 'Bomboloni Matcha', image: 'assets/images/matcha.jpg', price: 10000),
+      Product(name: 'Bomboloni Strawberry', image: 'assets/images/strawberry.jpg', price: 10000),
+      Product(name: 'Bomboloni Tiramisu', image: 'assets/images/tiramisu.jpg', price: 10000),
+    ];
+
+    void _addToCart(Product product) {
+      setState(() {
+        cart.add(product);
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('${product.name} ditambahkan ke keranjang')),
+      );
+    }
+
+    void _showCheckoutDialog() {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text('Pembayaran Berhasil'),
+          content: Text('Terima kasih telah membeli di Bomboskuy!'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+                setState(() {
+                  cart.clear();
+                });
+              },
+              child: Text('OK'),
+            ),
+          ],
+        ),
+      );
+    }
+
+    List<Widget> _pages() => [
+          // Home Page
+          SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Image.asset('assets/images/bomboskuy1.jpg'),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Text(
+                    'Bomboloni dari Bomboskuy hadir sebagai pilihan camilan istimewa yang menggoda selera. Dengan tekstur yang super lembut, rasa yang enak banget, dan isian yang melimpah serta lumer di mulut, setiap gigitan membawa kenikmatan yang sulit dilupakan. Tidak hanya itu, bomboloni ini juga tahan lama hingga 6 hari di suhu ruang tanpa mengurangi kualitas rasa dan kelembutannya — cocok untuk dinikmati kapan saja, di mana saja, baik untuk santapan pribadi maupun sebagai bingkisan spesial untuk orang tersayang.',
+                    style: TextStyle(fontSize: 16),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Text('Daftar Produk', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                ),
+                ...products.map((product) => Card(
+                      margin: const EdgeInsets.all(12),
+                      child: ListTile(
+                        leading: Image.asset(product.image, width: 60, height: 60, fit: BoxFit.cover),
+                        title: Text(product.name),
+                        subtitle: Text('Rp ${product.price}'),
+                        trailing: IconButton(
+                          icon: Icon(Icons.add_shopping_cart),
+                          onPressed: () => _addToCart(product),
+                        ),
+                      ),
+                    ))
+              ],
+            ),
+          ),
+
+          // Cart Page
+          cart.isEmpty
+              ? Center(child: Text('Keranjang kosong'))
+              : Column(
+                  children: [
+                    Expanded(
+                      child: ListView.builder(
+                        itemCount: cart.length,
+                        itemBuilder: (context, index) {
+                          final item = cart[index];
+                          return ListTile(
+                            leading: Image.asset(item.image, width: 50, height: 50, fit: BoxFit.cover),
+                            title: Text(item.name),
+                            subtitle: Text('Rp ${item.price}'),
+                            trailing: IconButton(
+                              icon: Icon(Icons.delete),
+                              onPressed: () {
+                                setState(() {
+                                  cart.removeAt(index);
+                                });
+                              },
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        children: [
+                          Text(
+                            'Total: Rp ${cart.fold(0, (total, item) => total + item.price)}',
+                            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                          ),
+                          SizedBox(height: 10),
+                          ElevatedButton(
+                            onPressed: _showCheckoutDialog,
+                            child: Text('Bayar Sekarang'),
+                          )
+                        ],
+                      ),
+                    )
+                  ],
+                )
+        ];
+
+    void _onItemTapped(int index) {
+      setState(() {
+        _selectedIndex = index;
+      });
+    }
+
+    @override
+    Widget build(BuildContext context) {
+      return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: Scaffold(
+          appBar: AppBar(
+            title: Text('Bomboskuy'),
+            backgroundColor: const Color.fromRGBO(255, 87, 34, 1),
+          ),
+          body: _pages()[_selectedIndex],
+          bottomNavigationBar: BottomNavigationBar(
+            currentIndex: _selectedIndex,
+            onTap: _onItemTapped,
+            selectedItemColor: Colors.deepOrange,
+            items: const [
+              BottomNavigationBarItem(
+                icon: Icon(Icons.home),
+                label: 'Beranda',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.shopping_cart),
+                label: 'Keranjang',
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+  }
