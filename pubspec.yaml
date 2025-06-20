@@ -1,28 +1,40 @@
-name: bomboskuy
-description: "A new Flutter project."
-publish_to: 'none'
-version: 0.1.0
+  name: bomboskuy
+  description: "A new Flutter project."
+  publish_to: 'none'
+  version: 0.1.0
 
-environment:
-  sdk: ^3.7.0
+  environment:
+    sdk: ^3.7.0
 
-dependencies:
+  dependencies:
+    flutter:
+      sdk: flutter
+    http: ^1.2.2
+    firebase_core: ^2.32.0
+    firebase_auth: ^4.20.0
+    firebase_database: ^10.4.1
+    cloud_firestore: ^4.17.5
+    provider: ^6.0.0
+    shared_preferences: ^2.0.0
+    intl: ^0.18.0
+
+  dev_dependencies:
+    flutter_test:
+      sdk: flutter
+    flutter_lints: ^5.0.0
+
   flutter:
-    sdk: flutter
-  http: ^1.2.2
-
-dev_dependencies:
-  flutter_test:
-    sdk: flutter
-  flutter_lints: ^5.0.0
-
-flutter:
-  uses-material-design: true
-  assets: 
-    - assets/images/bomboskuy1.jpg
-    - assets/images/logobomboskuy.jpg
-    - assets/images/coklat.jpg
-    - assets/images/matcha.jpg
-    - assets/images/strawberry.jpg
-    - assets/images/tiramisu.jpg
-    - images/bomboskuy-nobg.png
+    uses-material-design: true
+    assets: 
+      - assets/images/bomboskuy1.jpg
+      - assets/images/logobomboskuy.jpg
+      - assets/images/coklat.jpg
+      - assets/images/matcha.jpg
+      - assets/images/strawberry.jpg
+      - assets/images/tiramisu.jpg
+      - assets/images/bomboskuy-nobg.png
+      - assets/images/blueberry.jpg
+      - assets/images/pisang.jpg
+      - assets/images/keju.jpg
+      - assets/images/vanilla.jpg
+      - assets/images/taro.jpg

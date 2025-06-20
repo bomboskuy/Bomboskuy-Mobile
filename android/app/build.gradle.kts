@@ -1,5 +1,8 @@
 plugins {
     id("com.android.application")
+    // START: FlutterFire Configuration
+    id("com.google.gms.google-services")
+    // END: FlutterFire Configuration
     id("kotlin-android")
     // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
     id("dev.flutter.flutter-gradle-plugin")
@@ -36,6 +39,25 @@ android {
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig = signingConfigs.getByName("debug")
         }
+    }
+}
+
+
+buildscript {
+    repositories {
+        google()        // WAJIB
+        mavenCentral()  // WAJIB
+    }
+    dependencies {
+        classpath("com.android.tools.build:gradle:8.3.1")
+        classpath("com.google.gms:google-services:4.4.1")
+    }
+}
+
+allprojects {
+    repositories {
+        google()        // WAJIB
+        mavenCentral()  // WAJIB
     }
 }
 

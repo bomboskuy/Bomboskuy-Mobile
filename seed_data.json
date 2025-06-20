@@ -1,0 +1,33 @@
+{
+  "users": {
+    "user001": {
+      "email": "testuser@gmail.com",
+      "name": "Test User",
+      "phone": "08123456789",
+      "password": "12345"
+    }
+  },
+  "products": {
+    "product001": {
+      "name": "Bomboloni Coklat",
+      "price": 15000,
+      "description": "Bomboloni isi coklat premium",
+      "image": "https://via.placeholder.com/150",
+      "category": "Manis"
+    },
+    "product002": {
+      "name": "Bomboloni Keju",
+      "price": 16000,
+      "description": "Bomboloni isi keju lumer",
+      "image": "https://via.placeholder.com/150",
+      "category": "Gurih"
+    }
+  },
+  "carts": {
+    "user001": {
+      "product001": {
+        "quantity": 2
+      }
+    }
+  }
+}
